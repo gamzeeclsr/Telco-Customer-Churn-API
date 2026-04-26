@@ -50,6 +50,8 @@ telco-customer-churn/
 | Scikit-learn | ML modelling & evaluation |
 | Jupyter Notebook | Interactive analysis |
 | Docker | Containerised deployment |
+| FastAPI | Model serving API |
+| XGBoost | Final classification model |
 
 ---
 
@@ -109,43 +111,17 @@ The EDA notebook (`EDA.ipynb`) covers five structured sections:
 
 ---
 
-## 🤖 Machine Learning Pipeline
+## 🤖 Machine Learning & Model Development
 
-The ML notebook (`_DecisionTree_RandomForest.ipynb`) trains and compares classification models.
+The project includes multiple machine learning experiments for customer churn prediction. Different classification models were trained, compared, and evaluated before selecting the final production model for deployment.
 
-### Preprocessing
+## Models
 
-| Strategy | Applied To |
-|----------|-----------|
-| Binary Encoding (Yes → 1, No → 0) | 12 binary columns |
-| Ordinal Encoding | `Contract` (Month-to-month=0, One year=1, Two year=2) |
-| One-Hot Encoding (`drop_first=True`) | `PaymentMethod`, `InternetService` |
+### Final Selected Model
 
-### Train / Test Split
+> 🔧 *Final production model details (XGBoost) will be documented here.*
 
-| Parameter | Value | Reason |
-|-----------|-------|--------|
-| `test_size` | 0.20 | Standard 80/20 split for medium-sized datasets |
-| `random_state` | 42 | Reproducibility |
-| `stratify=y` | Enabled | Preserves ~26% churn ratio in both train and test sets |
-
-### Models
-
-> 🔧 *This section will be updated as models are finalised.*
-
-### Evaluation Metrics
-
-| Metric | Why It Matters for Churn |
-|--------|--------------------------|
-| **Accuracy** | Overall correctness across both classes |
-| **Precision / Recall / F1** | Captures the cost of False Negatives (missed churners) |
-| **ROC-AUC** | Threshold-independent performance — preferred for imbalanced classes |
-| **Confusion Matrix** | Breaks down TP, TN, FP, FN — critical for understanding business cost of errors |
-
-> In churn prediction, **False Negatives are the most costly error** — a missed churner is a lost customer.
-
-
-### Additional Model Experimentation
+### Comparative Model Experiments
 
 Alongside the final production model selected for deployment, additional classification models were developed and evaluated to compare different approaches for churn prediction.
 
@@ -180,11 +156,22 @@ Because churn prediction is an imbalanced classification problem, model comparis
 - Confusion matrix analysis
 - Cross-validation consistency
 
-> In this phase, reducing **False Negatives** was prioritized, since failing to detect a potential churner carries direct business cost.
+> In churn prediction, **False Negatives are the most costly error**, since failing to detect a potential churner has direct business impact.
 
 #### Outcome
 
 This experimentation phase helped benchmark multiple algorithms, validate preprocessing choices, and support informed model selection for deployment.
+
+---
+
+## Evaluation Metrics
+
+| Metric | Why It Matters for Churn |
+|--------|--------------------------|
+| **Accuracy** | Overall correctness across both classes |
+| **Precision / Recall / F1** | Captures the cost of False Negatives (missed churners) |
+| **ROC-AUC** | Threshold-independent performance |
+| **Confusion Matrix** | Breaks down classification errors |
 
 ---
 
@@ -208,6 +195,7 @@ Based on EDA findings, the following actions are ranked by expected churn-reduct
 - Launch a loyalty programme for the paperless billing segment
 
 ---
+
 ## ⚡ API Implementation
 
 As part of the deployment phase, a lightweight machine learning inference service was developed using **FastAPI** to expose the trained model through a RESTful API.
