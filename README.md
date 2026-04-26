@@ -22,18 +22,18 @@ This project analyses a real-world Telco dataset to:
 telco-customer-churn/
 │
 ├── data/
-│   ├── raw/                        # Original, unmodified dataset
-│   └── processed/                  # Cleaned & encoded dataset (cleaned_data.csv)
+│   ├── raw/                              # Original, unmodified dataset
+│   └── processed/                        # Cleaned & encoded dataset (cleaned_data.csv)
 │
 ├── notebooks/
-│   ├── 01_eda.ipynb                # Exploratory Data Analysis
-│   └── 02_Machine_Learning_Models.ipynb  # ML pipeline & model evaluation
+│   ├── EDA.ipynb                         # Exploratory Data Analysis
+│   └── _DecisionTree_RandomForest.ipynb  # ML pipeline & model evaluation
 │
-├── src/                            # Reusable source modules
-├── models/                         # Serialised trained model outputs
-├── api/                            # API serving layer
-├── ui/                             # Optional frontend interface
-├── app/                            # Application layer
+├── src/                                  # Reusable source modules
+├── models/                               # Serialised trained model outputs
+├── api/                                  # API serving layer
+├── ui/                                   # Optional frontend interface
+├── app/                                  # Application layer
 │
 ├── requirements.txt
 ├── Dockerfile
@@ -72,7 +72,7 @@ The project uses the **Telco Customer Churn** dataset.
 
 ## 🔍 Exploratory Data Analysis (EDA)
 
-The EDA notebook (`01_eda.ipynb`) covers five structured sections:
+The EDA notebook (`EDA.ipynb`) covers five structured sections:
 
 1. **Setup & Initial Data Exploration** — data loading, type inspection, statistical summaries, outlier detection
 2. **Categorical Features vs. Churn** — dynamic countplot grid for all 16 categorical variables
@@ -168,6 +168,8 @@ Based on EDA findings, the following actions are ranked by expected churn-reduct
 - Use streaming services as a promotional gift for contract upgrades
 - Launch a loyalty programme for the paperless billing segment
 
+---
+
 ## 🚀 Setup & How to Run
 
 > 🔧 *This section will be updated by the team once the full pipeline is finalised.*
@@ -180,14 +182,14 @@ pip
 
 ### Installation
 ```bash
-git clone https://github.com/your-org/telco-customer-churn.git
-cd telco-customer-churn
+git clone https://github.com/gamzeeclsr/Telco-Customer-Churn-API.git
+cd Telco-Customer-Churn-API
 pip install -r requirements.txt
 ```
 
 ### Run Notebooks
 ```bash
-jupyter notebook notebooks/01_eda.ipynb
+jupyter notebook notebooks/EDA.ipynb
 jupyter notebook notebooks/_DecisionTree_RandomForest.ipynb
 ```
 
