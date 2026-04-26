@@ -29,12 +29,9 @@ telco-customer-churn/
 │   ├── EDA.ipynb                         # Exploratory Data Analysis
 │   └── _DecisionTree_RandomForest.ipynb  # ML pipeline & model evaluation
 │
-├── src/                                  # Reusable source modules
 ├── models/                               # Serialised trained model outputs
 ├── api/                                  # API serving layer
 ├── ui/                                   # Optional frontend interface
-├── app/                                  # Application layer
-│
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
@@ -147,6 +144,48 @@ The ML notebook (`_DecisionTree_RandomForest.ipynb`) trains and compares classif
 
 > In churn prediction, **False Negatives are the most costly error** — a missed churner is a lost customer.
 
+
+### Additional Model Experimentation
+
+Alongside the final production model selected for deployment, additional classification models were developed and evaluated to compare different approaches for churn prediction.
+
+#### Models Explored
+
+| Model | Purpose |
+|-------|---------|
+| K-Nearest Neighbors (KNN) | Baseline distance-based classification |
+| Logistic Regression | Interpretable linear classifier |
+| Logistic Regression + SMOTE | Imbalance-aware resampled model |
+| Random Forest (Balanced) | Ensemble-based benchmark model |
+
+#### Optimization Techniques
+
+The experimentation process included several model improvement strategies:
+
+| Technique | Purpose |
+|----------|---------|
+| StandardScaler | Feature scaling for distance-sensitive models |
+| GridSearchCV | Hyperparameter tuning |
+| 5-Fold Cross Validation | Model robustness validation |
+| Class Weight Balancing | Improve minority class prediction |
+| SMOTE Oversampling | Address churn class imbalance |
+
+#### Evaluation Focus
+
+Because churn prediction is an imbalanced classification problem, model comparison emphasized:
+
+- Accuracy
+- Recall for churn class
+- F1-score
+- Confusion matrix analysis
+- Cross-validation consistency
+
+> In this phase, reducing **False Negatives** was prioritized, since failing to detect a potential churner carries direct business cost.
+
+#### Outcome
+
+This experimentation phase helped benchmark multiple algorithms, validate preprocessing choices, and support informed model selection for deployment.
+
 ---
 
 ## 📈 Business Recommendations
@@ -169,6 +208,29 @@ Based on EDA findings, the following actions are ranked by expected churn-reduct
 - Launch a loyalty programme for the paperless billing segment
 
 ---
+## ⚡ API Implementation
+
+As part of the deployment phase, a lightweight machine learning inference service was developed using **FastAPI** to expose the trained model through a RESTful API.
+
+### Implemented Features
+
+| Feature | Description |
+|---------|-------------|
+| `/predict` Endpoint | Returns churn prediction results |
+| Root Endpoint | API health check |
+| Pydantic Validation | Structured request validation |
+| Preprocessing Pipeline | Aligns user inputs with model features |
+| Probability Output | Returns churn likelihood score |
+
+### Prediction Response
+
+The API returns:
+
+- Binary churn prediction  
+- Human-readable result (`Churn` / `No Churn`)  
+- Predicted churn probability score
+
+This API transforms the trained model into an accessible prediction service capable of serving inference requests over HTTP.
 
 ## 🚀 Setup & How to Run
 
@@ -194,6 +256,34 @@ jupyter notebook notebooks/_DecisionTree_RandomForest.ipynb
 ```
 
 ---
+
+## 🐳 Dockerized Deployment
+
+To improve reproducibility and portability, the prediction API was containerized using Docker.
+
+### Containerization Components
+
+| Component | Purpose |
+|-----------|---------|
+| Dockerfile | Application container definition |
+| Docker Compose | Service orchestration |
+| .dockerignore | Build optimization |
+| requirements.txt | Dependency management |
+
+### Deployment Benefits
+
+Containerization provides:
+
+- Consistent environments across systems  
+- Simplified setup for collaborators  
+- Portable local deployment  
+- Production-ready packaging for future cloud deployment  
+
+### Run the Application
+
+```bash
+docker-compose up --build
+```
 
 ## 📦 Requirements
 
