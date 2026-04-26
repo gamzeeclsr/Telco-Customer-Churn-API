@@ -281,6 +281,3 @@ Containerization provides:
 docker-compose up --build
 ```
 
-## 📦 Requirements
-
-> 🔧 *Will be updated with pinned versions once all modules are complete.*
